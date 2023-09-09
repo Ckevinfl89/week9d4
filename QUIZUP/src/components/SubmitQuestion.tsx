@@ -13,9 +13,10 @@ type SubmitQuestionProps = {
 export default function SubmitQuestion({ handleChange, handleSubmit, newQuestion, isLoggedIn }: SubmitQuestionProps) {
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Label>Submit Question</Form.Label>
-            <Form.Control name='title' onChange={handleChange} value={newQuestion.question} />
-            <Button className='mt-3 w-100' variant='warning' type='submit' disabled={!isLoggedIn}>Submit Question</Button>
+            <Form.Label>Question</Form.Label>
+            <Form.Control name='question' placeholder='Question here' onChange={handleChange} value={newQuestion.question} />
+            <Form.Control name='answer' placeholder='Answer Here'onChange={handleChange} value={newQuestion.answer} />
+            <Button className='mt-3 w-100' variant='warning' type='submit' disabled={!isLoggedIn}>Create Question</Button>
         </Form>
     )
 }

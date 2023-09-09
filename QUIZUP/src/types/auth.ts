@@ -1,12 +1,11 @@
 
 type UserType = {
     id: number,
-    username: string,
-    password?: string,
-    confirmPassword?: string,
+    email: string
     firstName: string,
     lastName: string,
-    email: string
+    password?: string,
+    confirmPassword?: string,
 }
 
 export default UserType

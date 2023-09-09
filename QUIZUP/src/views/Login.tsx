@@ -5,43 +5,41 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import CategoryType from '../types/category';
 import UserType from '../types/auth';
-import { login, getMe } from '../lib/apiWrapper';
+import { login } from '../lib/apiWrapper';
 
 type LoginProps = {
     isLoggedIn: boolean,
-    logUserIn: (user:Partial<UserType>) => void,
-    flashMessage: (message: string|null, category: CategoryType|null) => void,
+    logUserIn: (user: UserType) => void,
+    flashMessage: (message: string | null, category: CategoryType | null) => void,
 }
 
-export default function Login({ isLoggedIn, logUserIn, flashMessage }: LoginProps) {
+export default function Login({ isLoggedIn, flashMessage, logUserIn }: LoginProps) {
     const navigate = useNavigate();
     
-    if (isLoggedIn){
+    if (isLoggedIn) {
         navigate('/');
     }
 
-    const [user, setUser] = useState<Partial<UserType>>({email: '', password: ''})
+    const [user, setUser] = useState<Partial<UserType>>({ email: '', password: '' })
 
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
-        setUser({...user, [e.target.name]: e.target.value})
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUser({ ...user, [e.target.name]: e.target.value })
     }
 
-    const handleFormSubmit = async (e: React.FormEvent): Promise<void >=> {
+    const handleFormSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         const response = await login(user.email!, user.password!)
-        if (response.error){
+        if (response.error) {
             flashMessage(response.error, 'danger')
         } else {
             localStorage.setItem('token', response.data?.token as string);
-            localStorage.setItem('tokenExp', response.data?.tokenExpiration as string);
-            const userResponse = await getMe(response.data?.token as string)
-            logUserIn(userResponse.data!);
+            logUserIn({ id: user.id!, email: user.email!, firstName: '', lastName: '' }); // Call logUserIn here
             navigate('/');
         }
     }
 
-    const validPassword = (password:string):boolean => password.length > 7
+    const validPassword = (password: string): boolean => password.length > 7
+
     return (
         <>
             <h1 className='text-center'>Log In</h1>

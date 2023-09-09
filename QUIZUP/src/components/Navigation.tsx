@@ -10,7 +10,7 @@ type NavigationProps = {
 
 export default function Navigation({ isLoggedIn, handleClick }:NavigationProps) {
     return (
-        <Navbar bg='dark' data-bs-theme='dark'>
+        <Navbar bg='primary' data-bs-theme='primary'>
             <Container>
                 <Navbar.Brand as={Link} to='/'>Quiz-Up</Navbar.Brand>
                 <Nav className='me-auto'>
